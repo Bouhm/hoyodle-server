@@ -2,10 +2,10 @@
   "name": "hoyodle-server",
   "version": "1.0.0",
   "description": "Server for HoYoDLE",
-  "main": "src/index.ts",
+  "main": "src/app.ts",
   "scripts": {
-    "start": "ts-node src/index.ts",
-    "dev": "nodemon src/index.ts",
+    "start": "ts-node src/app.ts",
+    "dev": "nodemon src/app.ts",
     "build": "tsc",
     "lint": "eslint --fix src test",
     "seed": "ts-node ./src/db/seeds.ts",
