@@ -11,7 +11,7 @@ export class HSRGameController {
 
     if (lastThree && lastThree.length) {
       filteredCharacters = filter(characters, char => {
-        return !includes(map(lastThree, game => game.answer), char.id)
+        return !includes(map(lastThree, game => game.answer.toString()), char.id.toString())
       })
     } else {
       filteredCharacters = characters;

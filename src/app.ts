@@ -2,6 +2,8 @@ import express from 'express';
 import morgan from 'morgan';
 import helmet from 'helmet';
 import cors from 'cors';
+import cron from 'node-cron';
+import { HSRGameController } from './controllers/HSRGame.controller';
 
 import * as middlewares from './middlewares';
 import api from './api/v1';
@@ -10,9 +12,14 @@ import mongoose from 'mongoose';
 
 require('dotenv').config();
 const app = express();
+const hsrGameController = new HSRGameController();
 
 connectDb();
 mongoose.connection.once('open', () => {
+  cron.schedule('0 9 * * *', () => {
+    hsrGameController.createNewGame();
+  })
+
   app.use(morgan('dev'));
   app.use(helmet());
   app.use(cors());

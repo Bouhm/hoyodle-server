@@ -1,7 +1,8 @@
 import mongoose from 'mongoose';
-import { map } from 'lodash';
+import { filter, includes, map } from 'lodash';
 import connectDb from '../util/connection';
 import HSRCharacterModel, { HSRCharacterDocument } from '../models/HSRCharacter';
+import HSRGameModel from '../models/HSRGame';
 
 connectDb();
 mongoose.connection.once('open', async () => {
