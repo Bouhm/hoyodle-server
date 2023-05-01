@@ -18,9 +18,10 @@ processes = []
   auto_rollback = true
 
 [[services]]
+  processes = ["app", "web"]
   http_checks = []
   internal_port = 8080
-  processes = ["app"]
+    processes = ["app", "web"]
   protocol = "tcp"
   script_checks = []
   [services.concurrency]
@@ -42,3 +43,9 @@ processes = []
     interval = "15s"
     restart_limit = 0
     timeout = "2s"
+
+[processes]
+  # The command below is used to launch a Rails server; be sure to
+  # replace with the command you're using to launch your server.
+  web = "node dist/src/scripts/dailyReset.js"
+  cron = "supercronic /app/crontab"
