@@ -1,9 +1,13 @@
 import { NextFunction } from 'express';
-import HSRGameModel, { HSRGameDocument } from '../models/HSRGame';
-import HSRCharacterModel from '../models/HSRCharacter';
+import HSRGameModel, { HSRGameDocument } from '../models/HSRGame.model';
+import HSRCharacterModel from '../models/HSRCharacter.model';
 import { filter, includes, map, random } from 'lodash';
+import HSRPlayModel from '../models/HSRPlay.model';
+import { HSRPlayController } from './HSRPlay.controller';
 
 export class HSRGameController {
+  private hsrPlayController = new HSRPlayController();
+
   public createNewGame = async (): Promise<HSRGameDocument> => {
     const lastThree = await HSRGameModel.find().sort({ $natural: -1 }).limit(3)
     const characters = await HSRCharacterModel.find()

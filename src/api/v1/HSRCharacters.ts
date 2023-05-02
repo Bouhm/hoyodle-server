@@ -1,5 +1,5 @@
 import express from 'express';
-import HSRCharacterModel, { HSRCharacterDocument } from '../../models/HSRCharacter';
+import HSRCharacterModel, { HSRCharacterDocument } from '../../models/HSRCharacter.model';
 
 const router = express.Router();
 
