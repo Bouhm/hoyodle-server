@@ -1,18 +1,15 @@
 import mongoose, { Document, Schema } from 'mongoose';
+import { Path, Element, Sex, Faction } from '../interfaces/Enums';
 
 const rarities = [4, 5]
-const weapons = ["The Abundance", "The Destruction", "The Erudition", "The Harmony", "The Hunt", "The Nihility", "The Preservation"]
-const elements = ["Fire", "Ice", "Imaginary", "Lightning", "Physical", "Quantum", "Wind"]
-const sexes = ["Female", "Male"]
-const factions = ["Astral Express", "Belobog", "Herta Space Station", "Intergalactic Merchant Guild", "Silvermane Guards", "Stellaron Hunters", "Wildfire", "Xianzhou Luofu"]
 
 const HSRCharacterSchema = new Schema({
   name: { type: String, required: true },
   rarity: { type: Number, enum: rarities, required: true },
-  weapon: { type: String, enum: weapons, required: true },
-  element: { type: String, enum: elements, required: true },
-  sex: { type: String, enum: sexes, required: true },
-  faction: { type: String, enum: factions, required: true },
+  weapon: { type: String, enum: Path, required: true },
+  element: { type: String, enum: Element, required: true },
+  sex: { type: String, enum: Sex, required: true },
+  faction: { type: String, enum: Faction, required: true },
 });
 
 export default mongoose.model('HSRCharacter', HSRCharacterSchema)
