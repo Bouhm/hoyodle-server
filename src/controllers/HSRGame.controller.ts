@@ -1,7 +1,7 @@
 import { NextFunction } from 'express';
 import HSRGameModel, { HSRGameDocument } from '../models/HSRGame.model';
 import HSRCharacterModel from '../models/HSRCharacter.model';
-import HSRMessageModel from '../models/HSRMessage.model';
+import HSRMessageModel, { HSRMessageDocument } from '../models/HSRMessage.model';
 import { filter, includes, map, random } from 'lodash';
 import { HSRPlayController } from './HSRPlay.controller';
 import { HSRMessageController } from './HSRMessage.controller';
@@ -33,11 +33,13 @@ export class HSRGameController {
     }
 
     const classicAnswer = classicChoices[random(classicChoices.length - 1)]._id
-    const messagesAnswerObj = messagesChoices[random(messagesChoices.length - 1)]
-    const characterMessages = await this.hsrMessageController.getMessagesByCharacterId(messagesAnswerObj.id)
+    const messagesAnswerCharacterObj = messagesChoices[random(messagesChoices.length - 1)]
+    const characterMessages = await this.hsrMessageController.getMessagesByCharacterId(messagesAnswerCharacterObj.id)
     const messagesAnswer = characterMessages[random(characterMessages.length - 1)]
 
-    return HSRGameModel.create({ classicAnswer, messagesAnswer }) as unknown as HSRGameDocument
+    console.log(messagesAnswer);
+
+    return HSRGameModel.create({ classicAnswer: classicAnswer, messagesAnswer }) as unknown as HSRGameDocument
   };
 
   public getTodaysGames = async (): Promise<HSRGameDocument> => {

@@ -7,6 +7,6 @@ import { HSRPlayController } from './HSRPlay.controller';
 
 export class HSRMessageController {
   public getMessagesByCharacterId = async (characterId: number): Promise<HSRMessageDocument[]> => {
-    return HSRCharacterModel.find({ 'contacts.id': characterId, type: 'Characters' })
+    return HSRMessageModel.find({ 'contacts.id': characterId, 'contacts.type': 'Characters' })
   };
 }
