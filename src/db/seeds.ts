@@ -19,19 +19,19 @@ mongoose.connection.once('open', async () => {
   const messageJsons = fs.readdirSync(messagesPath).filter((file: any) => path.extname(file) === '.json');
 
   try {
-    await Promise.all(map(characterJsons, (file: any) => {
-      const fileData = fs.readFileSync(path.join(charactersPath, file));
-      const characterJson = JSON.parse(fileData.toString());
-      const character = {
-        id: characterJson._id,
-        name: characterJson.name,
-        rarity: characterJson.rarity,
-        weapon: characterJson.path.name,
-        element: characterJson.combat_type.name,
-        faction: characterJson.faction.name
-      };
-      return HSRCharacterModel.findOneAndUpdate({ id: character.id }, character, { new: true, upsert: true });
-    }));
+    // await Promise.all(map(characterJsons, (file: any) => {
+    //   const fileData = fs.readFileSync(path.join(charactersPath, file));
+    //   const characterJson = JSON.parse(fileData.toString());
+    //   const character = {
+    //     id: characterJson._id,
+    //     name: characterJson.name,
+    //     rarity: characterJson.rarity,
+    //     weapon: characterJson.path.name,
+    //     element: characterJson.combat_type.name,
+    //     faction: characterJson.faction.name
+    //   };
+    //   return HSRCharacterModel.findOneAndUpdate({ id: character.id }, character, { new: true, upsert: true });
+    // }));
 
     await Promise.all(map(messageJsons, (file: any) => {
       const fileData = fs.readFileSync(path.join(messagesPath, file));
@@ -42,7 +42,7 @@ mongoose.connection.once('open', async () => {
         relatedMessages: messageJson.relatedMessages,
         startingMessageId: messageJson.sections[0].startingMessageId[0],
         messages: values(messageJson.sections[0].messages),
-        participatingContactIds: messageJson.sections[0].participatingContactIds
+        participatingContactIds: messageJson.sections[0].participatingContactsIds
       };
       return HSRMessageModel.findOneAndUpdate({ id: message.id }, message, { new: true, upsert: true });
     }));
