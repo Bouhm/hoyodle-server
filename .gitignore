@@ -74,3 +74,5 @@ typings/
 
 dist
 .env
+.vscode
+src/db/json/
