@@ -42,13 +42,7 @@ export class HSRGameController {
     return HSRGameModel.create({ classicAnswer: classicAnswer, messagesAnswer }) as unknown as HSRGameDocument
   };
 
-  public getTodaysGames = async (): Promise<HSRGameDocument> => {
-    const last = (await HSRGameModel.find().sort({ $natural: -1 }).limit(1))[0]
-
-    // if (!last || last.createdAt.getTime() + (1 * 24 * 60 * 60 * 1000) < new Date().getTime()) {
-    //   return await this.createNewGame();
-    // }
-
-    return new Promise(resolve => resolve(last as unknown as HSRGameDocument));
+  public getTodaysGames = async (): Promise<HSRGameDocument[]> => {
+    return HSRGameModel.find().sort({ $natural: -1 }).limit(1) as unknown as HSRGameDocument[];
   };
 }

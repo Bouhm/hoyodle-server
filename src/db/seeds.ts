@@ -7,6 +7,7 @@ import HSRCharacterModel, { HSRCharacterDocument } from '../models/HSRCharacter.
 import HSRGameModel from '../models/HSRGame.model';
 import { omit, values } from 'lodash';
 import HSRMessageModel from '../models/HSRMessage.model';
+import { HSRGameController } from '../controllers/HSRGame.controller';
 
 
 connectDb();
@@ -32,19 +33,21 @@ mongoose.connection.once('open', async () => {
     //   return HSRCharacterModel.findOneAndUpdate({ id: character.id }, character, { new: true, upsert: true });
     // }));
 
-    await Promise.all(map(messageJsons, (file: any) => {
-      const fileData = fs.readFileSync(path.join(messagesPath, file));
-      const messageJson = JSON.parse(fileData.toString());
-      const message = {
-        id: messageJson.id,
-        contacts: omit(messageJson.contacts, 'typeId'),
-        relatedMessages: messageJson.relatedMessages,
-        startingMessageId: messageJson.sections[0].startingMessageId[0],
-        messages: values(messageJson.sections[0].messages),
-        participatingContactIds: messageJson.sections[0].participatingContactsIds
-      };
-      return HSRMessageModel.findOneAndUpdate({ id: message.id }, message, { new: true, upsert: true });
-    }));
+    // await Promise.all(map(messageJsons, (file: any) => {
+    //   const fileData = fs.readFileSync(path.join(messagesPath, file));
+    //   const messageJson = JSON.parse(fileData.toString());
+    //   const message = {
+    //     id: messageJson.id,
+    //     contacts: omit(messageJson.contacts, 'typeId'),
+    //     relatedMessages: messageJson.relatedMessages,
+    //     startingMessageId: messageJson.sections[0].startingMessageId[0],
+    //     messages: values(messageJson.sections[0].messages),
+    //     participatingContactIds: messageJson.sections[0].participatingContactsIds
+    //   };
+    //   return HSRMessageModel.findOneAndUpdate({ id: message.id }, message, { new: true, upsert: true });
+    // }));
+    const hsrGameController = new HSRGameController()
+    console.log((await hsrGameController.getTodaysGames())[0])
   } finally {
     await mongoose.connection.close();
   }

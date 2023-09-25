@@ -15,12 +15,24 @@ router.get<{}, HSRGameDocument[]>('/', async (req, res, next) => {
   }
 });
 
-router.get<{}, HSRGameDocument[]>('/create', async (req, res, next) => {
+
+router.get<{}, HSRGameDocument>('/today', async (req, res, next) => {
+  const hsrGameController = new HSRGameController()
+
+  try {
+    res.send((await hsrGameController.getTodaysGames())[0]);
+  } catch (err: any) {
+    console.error(err.message)
+    next(err)
+  }
+});
+
+router.get<{}, HSRGameDocument>('/new', async (req, res, next) => {
   const hsrGameController = new HSRGameController()
   const newGame = await hsrGameController.createNewGame()
 
   try {
-    res.send([newGame]);
+    res.send(newGame);
   } catch (err: any) {
     console.error(err.message)
     next(err)
@@ -46,17 +58,6 @@ router.get<{}, HSRGameDocument[]>('/:id', async (req: any, res, next) => {
 
   try {
     res.send((await HSRGameModel.findById(id))!);
-  } catch (err: any) {
-    console.error(err.message)
-    next(err)
-  }
-});
-
-router.get<{}, HSRGameDocument>('/today', async (req, res, next) => {
-  const hsrGameController = new HSRGameController()
-
-  try {
-    res.send(await hsrGameController.getTodaysGames());
   } catch (err: any) {
     console.error(err.message)
     next(err)
