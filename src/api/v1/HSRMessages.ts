@@ -12,4 +12,15 @@ router.get<{}, HSRMessageDocument[]>('/', async (req, res, next) => {
   }
 });
 
+router.get<{}, HSRMessageDocument>('/:id', async (req: any, res, next) => {
+  const { id } = req.params;
+
+  try {
+    res.send((await HSRMessageModel.findById(id))!);
+  } catch (err: any) {
+    console.error(err.message)
+    next(err)
+  }
+});
+
 export default router;

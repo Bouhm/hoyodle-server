@@ -53,7 +53,7 @@ router.post<{}, HSRGameDocument>('/:id/plays/create', async (req: any, res, next
   }
 });
 
-router.get<{}, HSRGameDocument[]>('/:id', async (req: any, res, next) => {
+router.get<{}, HSRGameDocument>('/:id', async (req: any, res, next) => {
   const { id } = req.params;
 
   try {
