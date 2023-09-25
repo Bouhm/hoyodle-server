@@ -15,6 +15,18 @@ router.get<{}, HSRGameDocument[]>('/', async (req, res, next) => {
   }
 });
 
+router.get<{}, HSRGameDocument[]>('/create', async (req, res, next) => {
+  const hsrGameController = new HSRGameController()
+  const newGame = hsrGameController.createNewGame()
+
+  try {
+    // res.send(await HSRGameModel.find({ _id: newGame._id }));
+  } catch (err: any) {
+    console.error(err.message)
+    next(err)
+  }
+});
+
 router.post<{}, HSRGameDocument>('/:id/plays/create', async (req: any, res, next) => {
   const hsrPlayController = new HSRPlayController()
   const { id } = req.params;
@@ -44,7 +56,7 @@ router.get<{}, HSRGameDocument>('/today', async (req, res, next) => {
   const hsrGameController = new HSRGameController()
 
   try {
-    res.send(await hsrGameController.getTodaysGame());
+    res.send(await hsrGameController.getTodaysGames());
   } catch (err: any) {
     console.error(err.message)
     next(err)

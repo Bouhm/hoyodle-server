@@ -5,7 +5,6 @@ import { filter, includes, map } from 'lodash';
 import connectDb from '../util/connection';
 import HSRCharacterModel, { HSRCharacterDocument } from '../models/HSRCharacter.model';
 import HSRGameModel from '../models/HSRGame.model';
-import { Path, Element, Sex, Faction } from '../interfaces/Enums';
 import { omit, values } from 'lodash';
 import HSRMessageModel from '../models/HSRMessage.model';
 
@@ -38,7 +37,7 @@ mongoose.connection.once('open', async () => {
       const messageJson = JSON.parse(fileData.toString());
       const message = {
         id: messageJson.id,
-        contacts: omit(messageJson, 'typeId'),
+        contacts: omit(messageJson.contacts, 'typeId'),
         relatedMessages: messageJson.relatedMessages,
         startingMessageId: messageJson.sections[0].startingMessageId[0],
         messages: values(messageJson.sections[0].messages),

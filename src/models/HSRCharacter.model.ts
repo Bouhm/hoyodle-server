@@ -1,5 +1,4 @@
 import mongoose, { Document, Schema } from 'mongoose';
-import { Path, Element, Sex, Faction } from '../interfaces/Enums';
 
 const HSRCharacterSchema = new Schema({
   id: { type: Number, required: true, unique: true },
