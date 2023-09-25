@@ -15,13 +15,13 @@ export class HSRGameController {
 
     if (lastThree && lastThree.length) {
       filteredCharacters = filter(characters, char => {
-        return !includes(map(lastThree, game => game.answer.toString()), char.id.toString())
+        return !includes(map(lastThree, game => game.answer.toString()), char._id.toString())
       })
     } else {
       filteredCharacters = characters;
     }
 
-    const answer = characters[random(filteredCharacters.length - 1)].id
+    const answer = characters[random(filteredCharacters.length - 1)]._id
     return HSRGameModel.create({ answer }) as unknown as HSRGameDocument
   };
 
